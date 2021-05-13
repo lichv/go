@@ -75,3 +75,51 @@ func IsExist(f string) bool {
 	return err == nil || os.IsExist(err)
 }
 
+func write(file, mode, content string) (*string, error) {
+	var f *os.File
+	var err error
+	if mode == "w" {
+		f, err = os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer f.Close()
+		f.WriteString(content)
+	} else if mode == "a" {
+		f, err = os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
+		if err != nil {
+			return nil, err
+		}
+		defer f.Close()
+		f.WriteString(content)
+	}
+	str := "success"
+	return &str, nil
+}
+
+func read(filepath string) (*string,error) {
+	file, err := os.Open(filepath)
+	if err != nil {
+		return nil,err
+	}
+	defer file.Close()
+	var result = ""
+	var buf [256]byte
+	var content []byte
+	for  {
+		n, err := file.Read(buf[:])
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return &result,nil
+		}else if err == io.EOF {
+			content  = append(content,buf[:n]...)
+			break
+		}else{
+			content  = append(content,buf[:n]...)
+		}
+	}
+	result =string(content)
+	return &result,nil
+}
