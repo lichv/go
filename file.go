@@ -1,6 +1,8 @@
 package lichv
 
 import (
+	"io"
+	"log"
 	"os"
 	"path/filepath"
 	"sort"
