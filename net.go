@@ -9,7 +9,7 @@ import (
 	"unsafe"
 )
 
-func post(url string, params map[string]interface{},application_type string) (*string, error) {
+func Post(url string, params map[string]interface{},application_type string) (*string, error) {
 	if len(params) == 0 {
 		return nil, errors.New("参数错误")
 	}
@@ -33,7 +33,7 @@ func post(url string, params map[string]interface{},application_type string) (*s
 	return str, nil
 }
 
-func get(url string)(*string,error) {
+func Get(url string)(*string,error) {
 	resp,err := http.Get(url)
 	if err != nil {
 		return nil, err

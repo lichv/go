@@ -17,7 +17,7 @@ type FileNode struct {
 	FileNodes []*FileNode `json:"children"`
 }
 
-func getFileTree(rootpath string)(FileNode,error) {
+func GetFileTree(rootpath string)(FileNode,error) {
 	rootpath = filepath.Join(rootpath,"")
 	root := FileNode{"Root",rootpath, rootpath, "",rootpath, []*FileNode{}}
 	fileInfo, _ := os.Lstat(rootpath)
@@ -77,7 +77,7 @@ func IsExist(f string) bool {
 	return err == nil || os.IsExist(err)
 }
 
-func write(file, mode, content string) (*string, error) {
+func Write(file, mode, content string) (*string, error) {
 	var f *os.File
 	var err error
 	if mode == "w" {
@@ -99,7 +99,7 @@ func write(file, mode, content string) (*string, error) {
 	return &str, nil
 }
 
-func read(filepath string) (*string,error) {
+func Read(filepath string) (*string,error) {
 	file, err := os.Open(filepath)
 	if err != nil {
 		return nil,err
