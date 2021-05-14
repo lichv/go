@@ -34,7 +34,7 @@ func walk(path string, root string, info os.FileInfo, node *FileNode, filter str
 
 		// 拼接全路径
 		fpath := filepath.Join(path, filename)
-		if IsDir(fpath) || (!IsDir(fpath) && isMatch(fpath, `.*.md`)) {
+		if IsDir(fpath) || (!IsDir(fpath) && IsMatch(fpath, `.*.md`)) {
 			// 构造文件结构
 			fio, _ := os.Lstat(fpath)
 			relative_path := fpath[len(root):]
