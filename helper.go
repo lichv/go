@@ -27,6 +27,7 @@ func IsMatch(text string, filter string) bool {
 		return false
 	}
 }
+
 func In(haystack interface{}, needle interface{}) (bool, error) {
 	sVal := reflect.ValueOf(haystack)
 	kind := sVal.Kind()
