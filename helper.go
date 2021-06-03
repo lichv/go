@@ -181,6 +181,62 @@ func BoolVal(value interface{}) bool {
 	return key
 }
 
+func IntVal(value interface{}) int{
+	var key = 0
+	if value == nil {
+		return 0
+	}
+	switch value.(type) {
+	case float64:
+		ft := value.(float64)
+		key = int(ft)
+	case float32:
+		ft := value.(float32)
+		key = int(ft)
+	case int:
+		it := value.(int)
+		key = it
+	case uint:
+		it := value.(uint)
+		key = int(it)
+	case int8:
+		it := value.(int8)
+		key = int(it)
+	case uint8:
+		it := value.(uint8)
+		key = int(it)
+	case int16:
+		it := value.(int16)
+		key = int(it)
+	case uint16:
+		it := value.(uint16)
+		key = int(it)
+	case int32:
+		it := value.(int32)
+		key = int(it)
+	case uint32:
+		it := value.(uint32)
+		key = int(it)
+	case int64:
+		it := value.(int64)
+		key = int(it)
+	case uint64:
+		it := value.(uint64)
+		key = int(it)
+	case string:
+		it := value.(string)
+		key,_ = strconv.Atoi(it)
+	case []byte:
+		it := value.([]byte)
+		key,_ = strconv.Atoi(string(it))
+	default:
+		newValue, _ := json.Marshal(value)
+		it := string(newValue)
+		key,_ = strconv.Atoi(it)
+	}
+	return key
+}
+
 func HttpRequest(url, method, postdata string,headers map[string]interface{}) (interface{}, error) {
 	client := &http.Client{}
 	req, _ := http.NewRequest(strings.ToUpper(method), url, strings.NewReader(postdata))
