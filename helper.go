@@ -130,6 +130,9 @@ func BoolVal(value interface{}) bool {
 		return key
 	}
 	switch value.(type) {
+	case bool:
+		bt := value.(bool)
+		key = bt
 	case float64:
 		ft := value.(float64)
 		it := strconv.FormatFloat(ft, 'f', -1, 64)
