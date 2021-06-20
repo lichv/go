@@ -23,7 +23,7 @@ func IsMatch(text string, filter string) bool {
 	result := reg.FindAllString(text, -1)
 	if len(result) > 0 {
 		return true
-	}else{
+	} else {
 		return false
 	}
 }
@@ -52,20 +52,20 @@ func EncodeMD5(value string) string {
 }
 
 func GeneTimeUUID() string {
-	now := time.Now().UnixNano()/1000
-	return strconv.FormatUint(uint64(now),36)+strconv.Itoa(rand.New(rand.NewSource(now)).Intn(90)+10)
+	now := time.Now().UnixNano() / 1000
+	return strconv.FormatUint(uint64(now), 36) + strconv.Itoa(rand.New(rand.NewSource(now)).Intn(90)+10)
 }
 
-func URLAppendParams(uri string, key ,value string) (string,error) {
+func URLAppendParams(uri string, key, value string) (string, error) {
 	l, err := url.Parse(uri)
 	if err != nil {
-		return uri,err
+		return uri, err
 	}
 
 	query := l.Query()
-	query.Set(key,value)
+	query.Set(key, value)
 	encodeurl := l.Scheme + "://" + l.Host + "?" + query.Encode()
-	return encodeurl,nil
+	return encodeurl, nil
 }
 
 func Strval(value interface{}) string {
@@ -185,7 +185,7 @@ func BoolVal(value interface{}) bool {
 	return key
 }
 
-func IntVal(value interface{}) int{
+func IntVal(value interface{}) int {
 	var key = 0
 	if value == nil {
 		return 0
@@ -229,32 +229,32 @@ func IntVal(value interface{}) int{
 		key = int(it)
 	case string:
 		it := value.(string)
-		key,_ = strconv.Atoi(it)
+		key, _ = strconv.Atoi(it)
 	case []byte:
 		it := value.([]byte)
-		key,_ = strconv.Atoi(string(it))
+		key, _ = strconv.Atoi(string(it))
 	default:
 		newValue, _ := json.Marshal(value)
 		it := string(newValue)
-		key,_ = strconv.Atoi(it)
+		key, _ = strconv.Atoi(it)
 	}
 	return key
 }
 
-func HttpRequest(url, method, postdata string,headers map[string]interface{}) (interface{}, error) {
+func HttpRequest(url, method, postdata string, headers map[string]interface{}) (interface{}, error) {
 	client := &http.Client{}
 	req, _ := http.NewRequest(strings.ToUpper(method), url, strings.NewReader(postdata))
 	if len(headers) > 0 {
 		for k, v := range headers {
 			value := Strval(v)
-			req.Header.Set(k,value)
+			req.Header.Set(k, value)
 		}
-	}else{
+	} else {
 		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36")
 	}
 	for k, v := range headers {
 		value := Strval(v)
-		req.Header.Set(k,value)
+		req.Header.Set(k, value)
 	}
 	if strings.ToLower(method) == "post" {
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -294,102 +294,102 @@ func urlJoin(href, base string) string {
 	return baseUrl.ResolveReference(uri).String()
 }
 
-func GetNextMonday(input string) (string,error) {
+func GetNextMonday(input string) (string, error) {
 	inputTime, err := time.Parse("2006-01-02", input)
 	if err != nil {
 		fmt.Println(err.Error())
-		return "",err
+		return "", err
 	}
 	week := inputTime.Weekday().String()
 	if week == "Monday" {
-		return inputTime.Format("2006-01-02"),nil
-	}else if week == "Tuesday"{
-		return inputTime.Add(6*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Wednesday"{
-		return inputTime.Add(5*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Thursday"{
-		return inputTime.Add(4*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Friday"{
-		return inputTime.Add(3*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Saturday"{
-		return inputTime.Add(2*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Sunday"{
-		return inputTime.Add(1*24*60*60*time.Second).Format("2006-01-02"),nil
+		return inputTime.Format("2006-01-02"), nil
+	} else if week == "Tuesday" {
+		return inputTime.Add(6 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Wednesday" {
+		return inputTime.Add(5 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Thursday" {
+		return inputTime.Add(4 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Friday" {
+		return inputTime.Add(3 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Saturday" {
+		return inputTime.Add(2 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Sunday" {
+		return inputTime.Add(1 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
 	}
-	return "",errors.New("something wrong")
+	return "", errors.New("something wrong")
 }
-func GetPrevMonday(input string) (string,error) {
+func GetPrevMonday(input string) (string, error) {
 	inputTime, err := time.Parse("2006-01-02", input)
 	if err != nil {
 		fmt.Println(err.Error())
-		return "",err
+		return "", err
 	}
 	week := inputTime.Weekday().String()
 	if week == "Monday" {
-		return inputTime.Add(0*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Tuesday"{
-		return inputTime.Add(-1*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Wednesday"{
-		return inputTime.Add(-2*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Thursday"{
-		return inputTime.Add(-3*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Friday"{
-		return inputTime.Add(-4*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Saturday"{
-		return inputTime.Add(-5*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Sunday"{
-		return inputTime.Add(-6*24*60*60*time.Second).Format("2006-01-02"),nil
+		return inputTime.Add(0 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Tuesday" {
+		return inputTime.Add(-1 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Wednesday" {
+		return inputTime.Add(-2 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Thursday" {
+		return inputTime.Add(-3 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Friday" {
+		return inputTime.Add(-4 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Saturday" {
+		return inputTime.Add(-5 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Sunday" {
+		return inputTime.Add(-6 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
 	}
-	return "",errors.New("something wrong")
+	return "", errors.New("something wrong")
 }
 
-func GetNextSunday(input string) (string,error) {
+func GetNextSunday(input string) (string, error) {
 	inputTime, err := time.Parse("2006-01-02", input)
 	if err != nil {
 		fmt.Println(err.Error())
-		return "",err
+		return "", err
 	}
 	week := inputTime.Weekday().String()
 	if week == "Monday" {
-		return inputTime.Add(6*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Tuesday"{
-		return inputTime.Add(5*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Wednesday"{
-		return inputTime.Add(4*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Thursday"{
-		return inputTime.Add(3*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Friday"{
-		return inputTime.Add(2*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Saturday"{
-		return inputTime.Add(1*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Sunday"{
-		return inputTime.Add(0*24*60*60*time.Second).Format("2006-01-02"),nil
+		return inputTime.Add(6 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Tuesday" {
+		return inputTime.Add(5 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Wednesday" {
+		return inputTime.Add(4 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Thursday" {
+		return inputTime.Add(3 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Friday" {
+		return inputTime.Add(2 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Saturday" {
+		return inputTime.Add(1 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Sunday" {
+		return inputTime.Add(0 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
 	}
-	return "",errors.New("something wrong")
+	return "", errors.New("something wrong")
 }
-func GetPrevSunday(input string) (string,error) {
+func GetPrevSunday(input string) (string, error) {
 	inputTime, err := time.Parse("2006-01-02", input)
 	if err != nil {
 		fmt.Println(err.Error())
-		return "",err
+		return "", err
 	}
 	week := inputTime.Weekday().String()
 	if week == "Monday" {
-		return inputTime.Add(-1*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Tuesday"{
-		return inputTime.Add(-2*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Wednesday"{
-		return inputTime.Add(-3*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Thursday"{
-		return inputTime.Add(-4*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Friday"{
-		return inputTime.Add(-5*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Saturday"{
-		return inputTime.Add(-6*24*60*60*time.Second).Format("2006-01-02"),nil
-	}else if week == "Sunday"{
-		return inputTime.Add(0*24*60*60*time.Second).Format("2006-01-02"),nil
+		return inputTime.Add(-1 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Tuesday" {
+		return inputTime.Add(-2 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Wednesday" {
+		return inputTime.Add(-3 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Thursday" {
+		return inputTime.Add(-4 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Friday" {
+		return inputTime.Add(-5 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Saturday" {
+		return inputTime.Add(-6 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
+	} else if week == "Sunday" {
+		return inputTime.Add(0 * 24 * 60 * 60 * time.Second).Format("2006-01-02"), nil
 	}
-	return "",errors.New("something wrong")
+	return "", errors.New("something wrong")
 }
 
 func Fix2Float(value float64) float64 {
