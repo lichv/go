@@ -293,3 +293,106 @@ func urlJoin(href, base string) string {
 	}
 	return baseUrl.ResolveReference(uri).String()
 }
+
+func GetNextMonday(input string) (string,error) {
+	inputTime, err := time.Parse("2006-01-02", input)
+	if err != nil {
+		fmt.Println(err.Error())
+		return "",err
+	}
+	week := inputTime.Weekday().String()
+	if week == "Monday" {
+		return inputTime.Format("2006-01-02"),nil
+	}else if week == "Tuesday"{
+		return inputTime.Add(6*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Wednesday"{
+		return inputTime.Add(5*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Thursday"{
+		return inputTime.Add(4*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Friday"{
+		return inputTime.Add(3*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Saturday"{
+		return inputTime.Add(2*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Sunday"{
+		return inputTime.Add(1*24*60*60*time.Second).Format("2006-01-02"),nil
+	}
+	return "",errors.New("something wrong")
+}
+func GetPrevMonday(input string) (string,error) {
+	inputTime, err := time.Parse("2006-01-02", input)
+	if err != nil {
+		fmt.Println(err.Error())
+		return "",err
+	}
+	week := inputTime.Weekday().String()
+	if week == "Monday" {
+		return inputTime.Add(0*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Tuesday"{
+		return inputTime.Add(-1*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Wednesday"{
+		return inputTime.Add(-2*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Thursday"{
+		return inputTime.Add(-3*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Friday"{
+		return inputTime.Add(-4*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Saturday"{
+		return inputTime.Add(-5*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Sunday"{
+		return inputTime.Add(-6*24*60*60*time.Second).Format("2006-01-02"),nil
+	}
+	return "",errors.New("something wrong")
+}
+
+func GetNextSunday(input string) (string,error) {
+	inputTime, err := time.Parse("2006-01-02", input)
+	if err != nil {
+		fmt.Println(err.Error())
+		return "",err
+	}
+	week := inputTime.Weekday().String()
+	if week == "Monday" {
+		return inputTime.Add(6*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Tuesday"{
+		return inputTime.Add(5*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Wednesday"{
+		return inputTime.Add(4*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Thursday"{
+		return inputTime.Add(3*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Friday"{
+		return inputTime.Add(2*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Saturday"{
+		return inputTime.Add(1*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Sunday"{
+		return inputTime.Add(0*24*60*60*time.Second).Format("2006-01-02"),nil
+	}
+	return "",errors.New("something wrong")
+}
+func GetPrevSunday(input string) (string,error) {
+	inputTime, err := time.Parse("2006-01-02", input)
+	if err != nil {
+		fmt.Println(err.Error())
+		return "",err
+	}
+	week := inputTime.Weekday().String()
+	if week == "Monday" {
+		return inputTime.Add(-1*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Tuesday"{
+		return inputTime.Add(-2*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Wednesday"{
+		return inputTime.Add(-3*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Thursday"{
+		return inputTime.Add(-4*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Friday"{
+		return inputTime.Add(-5*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Saturday"{
+		return inputTime.Add(-6*24*60*60*time.Second).Format("2006-01-02"),nil
+	}else if week == "Sunday"{
+		return inputTime.Add(0*24*60*60*time.Second).Format("2006-01-02"),nil
+	}
+	return "",errors.New("something wrong")
+}
+
+func Fix2Float(value float64) float64 {
+	value, _ = strconv.ParseFloat(fmt.Sprintf("%.2f", value), 64)
+	return value
+}
